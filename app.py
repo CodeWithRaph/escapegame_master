@@ -7,22 +7,25 @@ def index():
     return render_template('index.html')
 
 @app.route('/contexte')
-def contact():
+def context():
+    title = "Contexte"
+    content = r"""En entrant dans l'enceinte de l'IUT vous réveillez le <b>Tinausaure</b> qui vous pourchasse.<br>
+    Il vous faudra rassembler la <b>Triforce CCNA</b>,<br>au cours de différentes étapes  pour vous <b>réconcilier</b> avec lui.
+    """
 
-    
-    return render_template('page.html')
+    return render_template('page.html', dino=True, title=title, content=content)
 
 # routes for the three fragments
 @app.route('/etape1')
 def first_fragment():
     title = "Émettre la bonne fréquence"
-    content = r"""Pour <b>brouiller les sens du dinosaure</b> et gagner du temps, 
+    content = r"""Pour <b>brouiller les sens du Tinausaure</b> et gagner du temps, 
     vous devez <b>émettre une fréquence spécifique</b> à l'aide de votre appareil.
     <br>Bonne chance !<br><br>
     Retrouvez la fréquence <b>f</b> à émettre :<br><br>
     \(6 = \dfrac{\mathrm{Am}}{\mathrm{f}}\)"""
 
-    return render_template('page.html', fragments=0, title=title, content=content)
+    return render_template('page.html', rappel=True, fragments=0, title=title, content=content)
 
 @app.route('/etape2')
 def second_fragment():
@@ -36,7 +39,7 @@ def second_fragment():
     <br><i><b>Indice:</b> Aller sur n'importe quel site web en http non sécurisé (ex: http://site.com/)</i>
     """
 
-    return render_template('page.html', fragments=1, title=title, content=content)
+    return render_template('page.html', rappel=True, fragments=1, title=title, content=content)
 
 @app.route('/etape3')
 def third_fragment():
@@ -45,7 +48,7 @@ def third_fragment():
     <br>Pour le récupérer, vous devez le <b>géocaliser</b> et le <b>scanner</b> sur un détecteur à triforce CCNA.
     """
 
-    return render_template('page.html', fragments=2, title=title, content=content)
+    return render_template('page.html', rappel=True, fragments=2, title=title, content=content)
 
 @app.route('/ending')
 def ending():
