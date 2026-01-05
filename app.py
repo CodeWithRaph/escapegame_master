@@ -13,7 +13,7 @@ def context():
     Il vous faudra rassembler la <b>Triforce CCNA</b>,<br>au cours de différentes étapes  pour vous <b>réconcilier</b> avec lui.
     """
 
-    return render_template('page.html', dino=True, title=title, content=content)
+    return render_template('page.html', dino=True, fragments=None, title=title, content=content)
 
 # routes for the three fragments
 @app.route('/etape1')
