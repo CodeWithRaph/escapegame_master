@@ -4,12 +4,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tinausaurus Park</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     {% block head %}
         <link rel="stylesheet" href="{{ url_for('static', filename='accueil.css') }}">
     {% endblock %}
   </head>
   <body>
     {% block body %}
+    <div class="container py-5">
+      <div class="card page-card shadow-sm">
+        <div class="card-body">
+            
+
+            <p class="rappel">Entrez dans l'invite de commande START pour passer à la suite.</p>
+        </div>
+      </div>
+    </div>
     {% endblock %}
   </body>
 </html>

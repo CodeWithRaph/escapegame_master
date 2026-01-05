@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Rubik:wght@300;400;700&display=swap');
+
+:root{
+  --d: 2000px;
+  --locked: rgba(40,40,40,0.95);
+  --unlocked: gold;
+  --gold-1: #fff3b0; /* bright highlight */
+  --gold-2: #f4c95a; /* main gold */
+  --gold-3: #d4a017; /* warm bronze */
+  --gold-edge: #8b6f2c; /* edge shadow */
+}
+
+body {
+    background-color: #072b12;
+    background-blend-mode: multiply;
+    position: relative;
+    z-index: 0;
+    min-height: 100vh;
+}
+
+body::before{
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url('/static/img/tinausaurus_park.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    filter: blur(6px) brightness(0.45) saturate(0.9);
+    transform: scale(1.03);
+    z-index: -2;
+    pointer-events: none;
+}
+
+body::after{
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(5,30,15,0.35), rgba(3,8,4,0.6));
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* triforce */
+section {
+    margin: 50px;
+    width: 200px;
+    height: 173.2px;
+    position: fixed !important;
+    bottom: 0;
+    right: 0;
+}
+
+.triangle {
+  width: 100px;
+  height: 86.6px;
+  position: absolute;
+  background: linear-gradient(135deg, var(--gold-1) 6%, var(--gold-2) 52%, var(--gold-3) 92%);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  transition: top 260ms ease, left 260ms ease, transform 260ms ease, filter 260ms ease, opacity 260ms ease;
+  box-shadow: 0 10px 22px rgba(30,20,8,0.18);
+  transform-origin: 50% 50%;
+  z-index: 2;
+}
+
+.triangle::after{
+  content: "";
+  position: absolute;
+  inset: 8% 14% 8% 14%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.02));
+  mix-blend-mode: screen;
+  pointer-events: none;
+  border-radius: 2px;
+  transform: rotate(-12deg);
+  opacity: 0.85;
+}
+
+#t1 {
+  top: 0;
+  left: 50px;
+  background: linear-gradient(135deg, var(--gold-1) 4%, var(--gold-2) 46%, var(--gold-3) 88%);
+}
+
+#t2 {
+  top: 86.6px;
+  left: 0;
+  background: linear-gradient(135deg, var(--gold-1) 8%, var(--gold-2) 54%, var(--gold-3) 96%);
+}
+
+#t3 {
+  top: 86.6px;
+  left: 100px;
+  background: linear-gradient(135deg, var(--gold-1) 6%, var(--gold-2) 50%, var(--gold-3) 94%);
+}
+
+.triangle.locked{
+  filter: grayscale(100%) brightness(0.45) contrast(0.95);
+  opacity: 0.95;
+}
+.triangle.locked::after{
+  opacity: 0.45;
+  mix-blend-mode: multiply;
+}
