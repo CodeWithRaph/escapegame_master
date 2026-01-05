@@ -12,8 +12,8 @@ def context():
     content = r"""En entrant dans l'enceinte de l'IUT vous réveillez le <b>Tinausaure</b> qui vous pourchasse.<br>
     Il vous faudra rassembler la <b>Triforce CCNA</b>,<br>au cours de différentes étapes  pour vous <b>réconcilier</b> avec lui.
     """
-
-    return render_template('page.html', dino=True, fragments=None, title=title, content=content)
+    rappel="Entrez dans l'invite de commande GO pour commencer votre mission."
+    return render_template('page.html', dino=True, fragments=None, title=title, content=content, rappel=rappel)
 
 # routes for the three fragments
 @app.route('/etape1')
@@ -24,8 +24,9 @@ def first_fragment():
     <br>Bonne chance !<br><br>
     Retrouvez la fréquence <b>f</b> à émettre :<br><br>
     \(6 = \dfrac{\mathrm{Am}}{\mathrm{f}}\)"""
+    rappel="Entrez dans l'invite de commande le code à 4 chiffres obtenu pour passer à la suite."
 
-    return render_template('page.html', rappel=True, fragments=0, title=title, content=content)
+    return render_template('page.html', fragments=0, title=title, content=content, rappel=rappel)
 
 @app.route('/etape2')
 def second_fragment():
@@ -38,8 +39,9 @@ def second_fragment():
     <br><br>Une fois connecté, faites maintenant appel au <b>portail captif</b> pour obtenir les données nécessaires à la suite de votre mission.
     <br><i><b>Indice:</b> Aller sur n'importe quel site web en http non sécurisé (ex: http://site.com/)</i>
     """
+    rappel="Entrez dans l'invite de commande le code à 4 chiffres obtenu pour passer à la suite."
 
-    return render_template('page.html', rappel=True, fragments=1, title=title, content=content)
+    return render_template('page.html', fragments=1, title=title, content=content, rappel=rappel)
 
 @app.route('/etape3')
 def third_fragment():
@@ -47,8 +49,9 @@ def third_fragment():
     content = r"""Le <b>dernier fragment</b> de la triforce est <b>perdu</b> dans la nature.
     <br>Pour le récupérer, vous devez le <b>géocaliser</b> et le <b>scanner</b> sur un détecteur à triforce CCNA.
     """
+    rappel="Entrez dans l'invite de commande le code à 4 chiffres obtenu pour passer à la suite."
 
-    return render_template('page.html', rappel=True, fragments=2, title=title, content=content)
+    return render_template('page.html', fragments=2, title=title, content=content, rappel=rappel)
 
 @app.route('/ending')
 def ending():

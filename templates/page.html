@@ -13,7 +13,7 @@
             {% if dino %}
             <img src="{{ url_for('static', filename='img/dinosaur.svg') }}" alt="Dinosaure" class="page-dino" aria-hidden="true">
             {% endif %}
-            
+
             <div class="instructions mb-3 p-3" role="region" aria-label="Consignes de jeu">
               <div class="instr-icon" aria-hidden="true">🦖</div>
               <div class="instr-content">
@@ -23,7 +23,7 @@
             </div>
 
             {% if rappel %}
-            <p class="rappel">Entrez dans l'invite de commande le code à 4 chiffres obtenu pour passer à la suite.</p>
+            <p class="rappel">{{ rappel }}</p>
             {% endif %}
         </div>
       </div>
