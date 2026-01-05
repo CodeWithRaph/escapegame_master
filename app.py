@@ -8,29 +8,44 @@ def index():
 
 @app.route('/contexte')
 def contact():
+
+    
     return render_template('page.html')
 
 # routes for the three fragments
 @app.route('/etape1')
 def first_fragment():
     title = "Émettre la bonne fréquence"
-    content = r"""Pour brouiller les sens du dinosaure et gagner du temps, 
-    vous devez émettre une fréquence spécifique à l'aide de votre appareil.
+    content = r"""Pour <b>brouiller les sens du dinosaure</b> et gagner du temps, 
+    vous devez <b>émettre une fréquence spécifique</b> à l'aide de votre appareil.
     <br>Bonne chance !<br><br>
-    Retrouvez la fréquence f à émettre :<br><br>
-    \(6 = \dfrac{\mathrm{am}}{\mathrm{fm}}\)"""
+    Retrouvez la fréquence <b>f</b> à émettre :<br><br>
+    \(6 = \dfrac{\mathrm{Am}}{\mathrm{f}}\)"""
 
     return render_template('page.html', fragments=0, title=title, content=content)
 
 @app.route('/etape2')
 def second_fragment():
     # si nfc fonctionne pas, afficher un indice pour se connecter au wifi et afficher le portail captif
-    return render_template('page.html', fragments=1)
+
+    title = "Se connecter au réseau"
+    content = r"""<b>Un point d'accès Wi-Fi</b> est disponible à proximité.<br>
+    Pour y accéder, veuillez vous connecter au réseau Wi-Fi et suivre les instructions.
+    <br><br><b>Mot de passe:</b> le-tinausaure-arrive
+    <br><br>Une fois connecté, faites maintenant appel au <b>portail captif</b> pour obtenir les données nécessaires à la suite de votre mission.
+    <br><i><b>Indice:</b> Aller sur n'importe quel site web en http non sécurisé (ex: http://site.com/)</i>
+    """
+
+    return render_template('page.html', fragments=1, title=title, content=content)
 
 @app.route('/etape3')
 def third_fragment():
-    # dire qu'il faut geolocaliser le dernier fragment
-    return render_template('page.html', fragments=2)
+    title = "Localiser le fragment final"
+    content = r"""Le <b>dernier fragment</b> de la triforce est <b>perdu</b> dans la nature.
+    <br>Pour le récupérer, vous devez le <b>géocaliser</b> et le <b>scanner</b> sur un détecteur à triforce CCNA.
+    """
+
+    return render_template('page.html', fragments=2, title=title, content=content)
 
 @app.route('/ending')
 def ending():
