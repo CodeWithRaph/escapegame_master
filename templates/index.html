@@ -8,6 +8,8 @@
     {% block head %}
         <link rel="stylesheet" href="{{ url_for('static', filename='accueil.css') }}">
     {% endblock %}
+
+    
   </head>
   <body>
     {% block body %}
@@ -21,5 +23,17 @@
       </div>
     </div>
     {% endblock %}
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['\\(','\\)'], ['$', '$']],
+          displayMath: [['$$','$$'], ['\\[','\\]']]
+        },
+        options: {
+          skipHtmlTags: ['script','noscript','style','textarea','pre']
+        }
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   </body>
 </html>

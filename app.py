@@ -13,8 +13,14 @@ def contact():
 # routes for the three fragments
 @app.route('/etape1')
 def first_fragment():
-    # afficher les frequences à tester pour brouiller les sens du dinausaure et gagner du temps
-    return render_template('page.html', fragments=0)
+    title = "Émettre la bonne fréquence"
+    content = r"""Pour brouiller les sens du dinosaure et gagner du temps, 
+    vous devez émettre une fréquence spécifique à l'aide de votre appareil.
+    <br>Bonne chance !<br><br>
+    Retrouvez la fréquence f à émettre :<br><br>
+    \(6 = \dfrac{\mathrm{am}}{\mathrm{fm}}\)"""
+
+    return render_template('page.html', fragments=0, title=title, content=content)
 
 @app.route('/etape2')
 def second_fragment():
