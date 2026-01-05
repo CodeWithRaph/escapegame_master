@@ -103,9 +103,6 @@ section {
 }
 
 .instructions{
-  position: fixed;
-  top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
   width: fit-content;
   max-width: min(720px, 90%);
@@ -118,6 +115,9 @@ section {
   border-radius: 12px;
   box-shadow: 0 18px 40px rgba(0,0,0,0.65);
   z-index: 1200;
+  position: fixed;
+  top: 50%;
+  left: 50%;
 }
 
 .instr-content{ flex: 1; }
@@ -135,12 +135,37 @@ section {
   margin: 0 0 4px 0;
   font-family: 'Cinzel', serif;
   color: #fde68a;
-  font-size: 1.05rem;
+  font-size: 1.3rem;
 }
 .instr-text{
   margin: 0;
+  font-size: 1.2rem;
   color: #e6f5e6;
   font-family: 'Rubik', system-ui, sans-serif;
+}
+
+.page-dino{
+  transform: translateY(-50%) translateX(6px);
+  width: 700px;
+  max-width: 80vw;
+  height: auto;
+  z-index: 1100;
+  display: block;
+  filter: sepia(80%) drop-shadow(0 12px 24px rgba(0,0,0,0.5)) !important;
+  opacity: 1;
+  pointer-events: none;
+  animation: dinoIdle 4.8s ease-in-out 820ms infinite;
+  position: fixed;
+  left: 40px;
+  top: 50%;
+}
+
+@keyframes dinoIdle {
+  0%   { transform: translateY(-50%) translateX(6px) rotate(-0.5deg) scale(1); }
+  25%  { transform: translateY(-48%) translateX(8px) rotate(0.6deg)  scale(1.005); }
+  50%  { transform: translateY(-50%) translateX(6px) rotate(-0.5deg) scale(1); }
+  75%  { transform: translateY(-52%) translateX(4px) rotate(-1.0deg) scale(0.995); }
+  100% { transform: translateY(-50%) translateX(6px) rotate(-0.5deg) scale(1); }
 }
 
 @media (max-width: 576px){
