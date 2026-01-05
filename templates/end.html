@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='end.css') }}">
+{% endblock %}
+
+{% block body %}
+  <div class="end-page container">
+    {% set fragments = 3 %}
+    
+
+    <h1 class="end-title">Vous avez rassemblé la <b>Triforce CCNA</b> et vous êtes <b>réconciliés</b> avec le <b>Tinausaure</b></h1>
+    <p class="end-sub">Félicitations — votre mission est accomplie.</p>
+    {% include 'triforce.html' %}
+    <div class="contributors card mt-4">
+      <div class="card-body">
+        <h2 class="mb-2">Remerciements</h2>
+        <p>Escape Game réalisé par :</p>
+        <ul>
+          <li>Enoal Vergeot</li>
+          <li>Mathieu Turlan</li>
+          <li>Raphaël Pavy</li>
+          <li>Robin Zuberer</li>
+        </ul>
+        <p>Merci à :</p>
+        <ul>
+          <li>Mr. Arnaud Fevrier de nous avoir prêté le matériel</li>
+          <li>Mr. Tin Nguyen de nous avoir prêté son surnom</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}

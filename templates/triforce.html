@@ -1,17 +1,19 @@
-<section>
-{% if fragments == 3 %}  
+{% if fragments != None %}
+<section class="triforce" aria-label="Triforce CCNA">
+  {% if fragments == 3 %}  
   <div class="triangle unlocked" id="t1"></div>
-{% else %}
+  {% else %}
     <div class="triangle locked" id="t1"></div>
-{% endif %}
-{% if fragments >= 1 %}
+  {% endif %}
+  {% if fragments >= 1 %}
   <div class="triangle unlocked" id="t2"></div>
-{% else %}
+  {% else %}
     <div class="triangle locked" id="t2"></div>
-{% endif %}
-{% if fragments >= 2 %}
+  {% endif %}
+  {% if fragments >= 2 %}
   <div class="triangle unlocked" id="t3"></div>
-{% else %}
+  {% else %}
     <div class="triangle locked" id="t3"></div>
-{% endif %}
+  {% endif %}
 </section>
+{% endif %}
