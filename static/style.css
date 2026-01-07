@@ -59,6 +59,13 @@ body{
     pointer-events: none;
 }
 
+.chrono-container{
+    margin: 0.75rem;
+    color: #d4f1d4;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    font-size: 1.1rem;
+}
+
 @media (max-width: 576px){
     .rappel{
         bottom: 12px;

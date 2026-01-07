@@ -1,0 +1,32 @@
+{% if show_timer %}
+  <div class="chrono-container" style="margin-top:0.75rem; font-weight:700;">
+    {% if timer_start %}
+      <span id="global-timer">00:00:00</span> {% if malus %}(malus de {{ malus }} min){% endif %}
+      <script>
+        window.__chrono_start_epoch = {{ timer_start|tojson }};
+        (function(){
+          const serverStart = window.__chrono_start_epoch;
+          if (!serverStart) return;
+          const el = document.getElementById('global-timer');
+          if (!el) return;
+          function pad(n){return String(n).padStart(2,'0');}
+          function render(){
+            const elapsed = Math.floor((Date.now()/1000) - serverStart);
+            const hrs = Math.floor(elapsed/3600);
+            const mins = Math.floor((elapsed%3600)/60);
+            const secs = elapsed%60;
+            el.textContent = pad(hrs)+':'+pad(mins)+':'+pad(secs);
+          }
+          render();
+          setInterval(render, 500);
+        })();
+      </script>
+    {% elif final_elapsed is defined %}
+      {% set s = final_elapsed|int %}
+      {% set hrs = (s // 3600) %}
+      {% set mins = ((s % 3600) // 60) %}
+      {% set secs = (s % 60) %}
+      Temps total : <span>{{ '%02d:%02d:%02d' % (hrs, mins, secs) }}</span>
+    {% endif %}
+  </div>
+{% endif %}

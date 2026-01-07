@@ -16,9 +16,8 @@
     <div class="container py-5">
       <div class="card page-card shadow-sm">
         <div class="card-body">
-            
-
             <p class="rappel">Entrez dans l'invite de commande START pour démarrer l'Escape Game.</p>
+            {% include 'chrono.html' %}
         </div>
       </div>
     </div>
@@ -35,5 +34,6 @@
       };
     </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="{{ url_for('static', filename='chrono.js') }}"></script>
   </body>
 </html>
