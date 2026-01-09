@@ -3,7 +3,7 @@ import asyncio
 import subprocess
 import random
 from bleak import BleakClient, BleakScanner
-import state
+
 SERVICE_UUID = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
 CHAR_UUID_NOTIFY = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
 CHAR_UUID_WRITE = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
@@ -19,7 +19,10 @@ async def notification_handler(sender, data, client):
     message = data.decode("utf-8").strip()
     print(f" Signal reçu : {message}")
     if message in PAGE_MAP:
-        state.current_page = PAGE_MAP[message] # <-- mise à jour de la page
+        with open("state.py", "w") as fd :
+            value = f'current_page = "{PAGE_MAP[message]}"'
+            fd.write(value)
+            
         print(f" Page actuelle mise à jour :{PAGE_MAP[message]}")
 
     await asyncio.sleep(0.05)  # petit délai
