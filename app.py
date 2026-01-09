@@ -44,7 +44,7 @@ def second_fragment():
     <br><br>Une fois connecté, faites maintenant appel au <b>portail captif</b> pour obtenir les données nécessaires à la suite de votre mission.
     <br><i><b>Indice:</b> Aller sur n'importe quel site web en http non sécurisé (ex: http://site.com/)</i>
     """
-    rappel="Entrez dans l'invite de commande le code à 4 chiffres obtenu pour passer à la suite."
+    rappel="Entrez dans l'invite de commande le code obtenu pour passer à la suite."
     start_epoch = stopwatch.get_start_wall_time('global')
     malus = stopwatch.get_malus_minutes('global')
     return render_template('page.html', fragments=1, title=title, content=content, rappel=rappel, show_timer=True, timer_start=start_epoch)
