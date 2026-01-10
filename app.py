@@ -53,13 +53,14 @@ def third_fragment():
     <br>Pour le récupérer, vous devez le <b>géocaliser</b> et le <b>scanner</b> sur un détecteur à triforce CCNA.
     """
     rappel="Entrez dans l'invite de commande le code à 4 chiffres obtenu pour passer à la suite."
+    malus = state.erreur
     
     start_epoch = stopwatch.get_start_wall_time()
     return render_template('page.html', fragments=2, title=title, content=content, rappel=rappel, show_timer=True, timer_start=start_epoch, malus=malus)
 
 @app.route('/ending')
 def ending():
-    # stopwatch.add_malus_minutes(1)
+    stopwatch.add_malus_minutes(state.erreur)
     elapsed = stopwatch.stop()
     malus = stopwatch.get_malus_minutes()
     return render_template('end.html', show_timer=True, timer_start=None, final_elapsed=elapsed, malus=malus)
