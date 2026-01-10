@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify
-import stopwatch
+import stopwatch  # <-- module Python local pour le chrono
 import state  # <-- module Python local pour partager l'état
 
 app = Flask(__name__)
@@ -16,9 +16,8 @@ def context():
     Il vous faudra rassembler la <b>Triforce CCNA</b>,<br>au cours de différentes étapes  pour vous <b>réconcilier</b> avec lui.
     """
     rappel="Entrez dans l'invite de commande GO pour commencer votre mission."
-    stopwatch.start('global')
-    start_epoch = stopwatch.get_start_wall_time('global')
-    malus = stopwatch.get_malus_minutes('global')
+    stopwatch.start()
+    start_epoch = stopwatch.get_start_wall_time()
     return render_template('page.html', dino=True, fragments=None, title=title, content=content, rappel=rappel, show_timer=True, timer_start=start_epoch)
 
 @app.route('/etape1')
@@ -31,8 +30,7 @@ def first_fragment():
     \(6 = \dfrac{\mathrm{Am}}{\mathrm{f}}\)"""
     rappel="Entrez dans l'invite de commande le code à 4 chiffres obtenu pour passer à la suite."
 
-    start_epoch = stopwatch.get_start_wall_time('global')
-    malus = stopwatch.get_malus_minutes('global')
+    start_epoch = stopwatch.get_start_wall_time()
     return render_template('page.html', fragments=0, title=title, content=content, rappel=rappel, show_timer=True, timer_start=start_epoch)
 
 @app.route('/etape2')
@@ -45,8 +43,7 @@ def second_fragment():
     <br><i><b>Indice:</b> Aller sur n'importe quel site web en http non sécurisé (ex: http://site.com/)</i>
     """
     rappel="Entrez dans l'invite de commande le code obtenu pour passer à la suite."
-    start_epoch = stopwatch.get_start_wall_time('global')
-    malus = stopwatch.get_malus_minutes('global')
+    start_epoch = stopwatch.get_start_wall_time()
     return render_template('page.html', fragments=1, title=title, content=content, rappel=rappel, show_timer=True, timer_start=start_epoch)
 
 @app.route('/etape3')
@@ -56,16 +53,15 @@ def third_fragment():
     <br>Pour le récupérer, vous devez le <b>géocaliser</b> et le <b>scanner</b> sur un détecteur à triforce CCNA.
     """
     rappel="Entrez dans l'invite de commande le code à 4 chiffres obtenu pour passer à la suite."
-    stopwatch.add_malus_minutes('global', 1)
-    start_epoch = stopwatch.get_start_wall_time('global')
-    malus = stopwatch.get_malus_minutes('global')
+    
+    start_epoch = stopwatch.get_start_wall_time()
     return render_template('page.html', fragments=2, title=title, content=content, rappel=rappel, show_timer=True, timer_start=start_epoch, malus=malus)
 
 @app.route('/ending')
 def ending():
-    stopwatch.add_malus_minutes('global', 1)
-    elapsed = stopwatch.stop('global')
-    malus = stopwatch.get_malus_minutes('global')
+    # stopwatch.add_malus_minutes(1)
+    elapsed = stopwatch.stop()
+    malus = stopwatch.get_malus_minutes()
     return render_template('end.html', show_timer=True, timer_start=None, final_elapsed=elapsed, malus=malus)
 
 @app.errorhandler(404)

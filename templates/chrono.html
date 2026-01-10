@@ -1,24 +1,22 @@
 {% if show_timer %}
   <div class="chrono-container" style="margin-top:0.75rem; font-weight:700;">
     {% if timer_start %}
-      <span id="global-timer">00:00:00</span> {% if malus %}(malus de {{ malus }} min){% endif %}
+      <span id="global-timer" data-start="{{ timer_start|tojson }}">00:00:00</span> {% if malus %}(malus de {{ malus }} min){% endif %}
       <script>
+        // expose server start for backward compatibility
         window.__chrono_start_epoch = {{ timer_start|tojson }};
         (function(){
-          const serverStart = window.__chrono_start_epoch;
-          if (!serverStart) return;
-          const el = document.getElementById('global-timer');
-          if (!el) return;
-          function pad(n){return String(n).padStart(2,'0');}
-          function render(){
-            const elapsed = Math.floor((Date.now()/1000) - serverStart);
-            const hrs = Math.floor(elapsed/3600);
-            const mins = Math.floor((elapsed%3600)/60);
-            const secs = elapsed%60;
-            el.textContent = pad(hrs)+':'+pad(mins)+':'+pad(secs);
+          function doAttach(){
+            if (window.Chrono && document.getElementById('global-timer')){
+              window.Chrono.setServerStart(window.__chrono_start_epoch);
+              window.Chrono.attach('global-timer');
+              return true;
+            }
+            return false;
           }
-          render();
-          setInterval(render, 500);
+          if (!doAttach()){
+            var iv = setInterval(function(){ if (doAttach()){ clearInterval(iv); } }, 100);
+          }
         })();
       </script>
     {% elif final_elapsed is defined %}
