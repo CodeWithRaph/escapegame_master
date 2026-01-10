@@ -74,7 +74,7 @@ def stop():
         t0 = _stopwatch["start_time"]
         if t0 is None:
             return None
-        elapsed_sec = time.monotonic() - t0 - _malus_seconds
+        elapsed_sec = time.monotonic() - t0 + _malus_seconds
         _stopwatch["start_time"] = None
         _stopwatch["wall_time"] = None
     export()
@@ -106,11 +106,11 @@ def get_start_wall_time():
         return _stopwatch["wall_time"]
 
 def add_malus_minutes(minutes):
-    """Increment malus for key by given minutes."""
+    """Increment malus by given minutes."""
     seconds = float(minutes) * 60.0
     with _lock:
         global _malus_seconds
-        _malus_seconds = minutes + seconds
+        _malus_seconds = seconds
 
 
 def get_malus_minutes():
