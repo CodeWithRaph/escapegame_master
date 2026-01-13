@@ -1,1 +1,1 @@
-current_page = "/etape2"
+current_page = "/"
