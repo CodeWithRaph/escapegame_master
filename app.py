@@ -38,7 +38,7 @@ def second_fragment():
     title = "Se connecter au réseau"
     content = r"""<b>Un point d'accès Wi-Fi</b> est disponible à proximité.<br>
     Pour y accéder, veuillez vous connecter au réseau Wi-Fi et suivre les instructions.
-    <br><br>Activer l'<b>NFC</b> sur votre téléphone et approchez le du <b>Flipper zero</b>.
+    <br><br>Activer le <b>NFC</b> sur votre téléphone et approchez le du <b>Flipper zero</b>.
     <br><br>Sinon <b>Mot de passe:</b> le-tinausaure-arrive
     <br><br>Une fois connecté, faites maintenant appel au <b>portail captif</b> pour obtenir les données nécessaires à la suite de votre mission.
     <br><i><b>Indice:</b> Aller sur n'importe quel site web en http non sécurisé (ex: http://site.com/)</i>
