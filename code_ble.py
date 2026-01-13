@@ -6,7 +6,19 @@ import state
 import time
 from bleak import BleakClient, BleakScanner
 import os
+from fabric import Connection
 
+SERVICE_UUID = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
+CHAR_UUID_NOTIFY = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
+CHAR_UUID_WRITE = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
+
+def connection_ssh(commande, ip) :
+    ssh = Connection(
+        host=ip,
+        user="robin",
+        connect_kwargs={"key_filename":"/home/qamu/.ssh/id_rsa"} #/!\ attention parfois il y a une confution de clée rsa et dsa par paremiko /!\
+        )
+    ssh.run(commande)
 def update_state(**updates):
     state_data = {}
 
@@ -30,9 +42,7 @@ def update_state(**updates):
         for key, value in state_data.items():
             f.write(f"{key} = {value}\n")
 
-SERVICE_UUID = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
-CHAR_UUID_NOTIFY = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
-CHAR_UUID_WRITE = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
+
 PAGE_MAP = {
     "START": "/contexte",
     "GO": "/etape1",
@@ -55,8 +65,18 @@ async def notification_handler(sender, data, client):
             erreur=erreur
         )
 
-    # Début du chrono
-    elif message == "START":
+    elif message == "-FFFF":
+        connection_ssh('sudo systemctl stop x11vnc-display1.service', "192.168.1.2")
+        connection_ssh('sudo systemctl stop firefox-sae.service', "192.168.1.2")
+        print("ok")
+    elif message == "FFFF":
+        connection_ssh('sudo systemctl start x11vnc-display1.service', "192.168.1.2")
+        connection_ssh('sudo systemctl start firefox-sae.service', "192.168.1.2")
+        subprocess.run("python3 ../script.py connect 1 &", shell=True)
+        update_state(
+            current_page="/"
+        )
+    elif message == "START":    
         update_state(
             current_page="/contexte",
             crono_debut=time.time()
@@ -68,7 +88,10 @@ async def notification_handler(sender, data, client):
             current_page="/ending",
             crono_fin=time.time()
         )
-
+    elif "nom =" in message:
+        update_state(
+            nom=message.split("nom =")[1]
+        )
     # Navigation classique
     elif message in PAGE_MAP:
         update_state(
@@ -83,16 +106,6 @@ async def notification_handler(sender, data, client):
         print(" Confirmation envoyée")
     except Exception as e:
         print(" Erreur en envoyant la confirmation :", e)
-
-    # exécuter le code reçu
-    try:
-        print(f" Exécution du code : {message}")
-        if message == "AAAA":
-            subprocess.run("python3 script.py connect 1 &", shell=True)
-        elif message == "-AAAA":
-            subprocess.run("pkill -f '^vncviewer'", shell=True)
-    except Exception as e:
-        print(" Erreur lors de l'exécution :", e)
 
     return True
 
@@ -120,8 +133,8 @@ async def connect_and_listen(address):
             await asyncio.sleep(0.1)  # boucle rapide pour vérifier régulièrement
 
         await client.stop_notify(CHAR_UUID_NOTIFY)
-        print(" Déconnecté, nouvelle recherche dans 5-10s...")
-        await asyncio.sleep(10)  # attendre avant nouvelle recherche
+        print(" Déconnecté, nouvelle recherche dans 5s...")
+        await asyncio.sleep(5)  # attendre avant nouvelle recherche
 
 async def main():
     while True:
@@ -130,15 +143,15 @@ async def main():
         target = next((d for d in devices if d.name == "STM32WB_BLE"), None)
 
         if not target:
-            print(" Périphérique non trouvé, nouvelle tentative dans 5s...")
-            await asyncio.sleep(5)
+            print(" Périphérique non trouvé, nouvelle tentative dans 3s...")
+            await asyncio.sleep(3)
             continue
 
         try:
             await connect_and_listen(target.address)
         except Exception as e:
-            print(f" Erreur BLE : {e}, nouvelle tentative dans 5s...")
-            await asyncio.sleep(5)
+            print(f" Erreur BLE : {e}, nouvelle tentative dans 2s...")
+            await asyncio.sleep(2)
 
 if __name__ == "__main__": 
     asyncio.run(main()) 
