@@ -58,7 +58,7 @@ async def notification_handler(sender, data, client):
     # Cas erreur avec code 6013
     if "6013" in message:
         parts = message.split("6013", 1)
-        erreur = parts[1] if len(parts) > 1 else ""
+        erreur = parts[1] if len(parts) > 1 else 0
 
         update_state(
             current_page="/etape3",
@@ -74,8 +74,13 @@ async def notification_handler(sender, data, client):
         connection_ssh('sudo systemctl start firefox-sae.service', "192.168.1.2")
         subprocess.run("python3 ../script.py connect 1 &", shell=True)
         update_state(
-            current_page="/"
+            current_page="/",
+            crono_debut=0,
+            crono_fin=0,
+            erreur=0,
+            nom=""
         )
+        
     elif message == "START":    
         update_state(
             current_page="/contexte",
@@ -89,15 +94,27 @@ async def notification_handler(sender, data, client):
             crono_fin=time.time()
         )
     elif "nom =" in message:
+        nom = message.split("nom =")
+        print(f"{message}===={nom}")
+        nom = nom[1]
+        print(f"{message}===={nom}")
         update_state(
-            nom=message.split("nom =")[1]
+            nom=nom,
+            Value=True
         )
+        
+        with open(f"log_file_{state.nom}.log", "w", encoding="utf-8") as log:
+            log.write(f"=== FICHIER LOG EQUIPE {state.nom}===\n")
+            log.write(f"temps : {state.crono_debut} ---> {state.crono_fin}\n")
+            log.write(f"malus : {state.erreur} \n")
+        subprocess.run(f"scp /home/qamu/escapegame_master/log_file_{state.nom}.log thorin:", shell=True)
+        subprocess.run(f"rm /home/qamu/escapegame_master/log_file_{state.nom}.log", shell=True)
     # Navigation classique
     elif message in PAGE_MAP:
         update_state(
             current_page=PAGE_MAP[message]
         )
-
+        
     await asyncio.sleep(0.05)
 
     # envoyer la confirmation BLE
