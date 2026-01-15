@@ -35,13 +35,15 @@ def first_fragment():
 
 @app.route('/etape2')
 def second_fragment():
-    title = "Se connecter au réseau"
-    content = r"""<b>Un point d'accès Wi-Fi</b> est disponible à proximité.<br>
-    Pour y accéder, veuillez vous connecter au réseau Wi-Fi et suivre les instructions.
-    <br><br>Activer le <b>NFC</b> sur votre téléphone et approchez le du <b>Flipper zero</b>.
-    <br><br>Sinon <b>Mot de passe:</b> le-tinausaure-arrive
-    <br><br>Une fois connecté, faites maintenant appel au <b>portail captif</b> pour obtenir les données nécessaires à la suite de votre mission.
-    <br><i><b>Indice:</b> Aller sur n'importe quel site web en http non sécurisé (ex: http://site.com/)</i>
+    title = "Entrer dans le Tinausaurus Park"
+    content = r"""Le portail d'entrée du parc est <b>verrouillé</b>. Et <b>Mr Fevrier</b>, le gardien du parc, refuse de vous laisser entrer sans un badge spécial.<br>
+    utilisez le <b>Flipper Zero</b> pour saboter le lecteur de badge en utilisant la bonne fréquence et ainsi <b>déverrouiller le portail</b>.<br><br>
+    1. Bouton du milieu > NFC > saved<br>
+    2. Sélectionner une fréquence à tester<br>
+    3. Emulate<br>
+    4. Coller le Flipper contre le lecteur de badge.
+    <br><br>Une fois connecté au <b>point d'accès Wi-Fi</b>, faites maintenant appel au <b>portail captif</b> pour obtenir les données nécessaires à la suite de votre mission.
+    <br><br><i><b>Indice:</b> Aller sur n'importe quel site web en http non sécurisé (ex: http://site.com/)</i>
     """
     rappel="Entrez dans l'invite de commande le code obtenu pour passer à la suite."
     start_epoch = stopwatch.get_start_wall_time()
