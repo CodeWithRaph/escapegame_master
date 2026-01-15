@@ -53,7 +53,11 @@ def second_fragment():
 def third_fragment():
     title = "Localiser le fragment final"
     content = r"""Le <b>dernier fragment</b> de la triforce est <b>perdu</b> dans la nature.
-    <br>Pour le récupérer, vous devez le <b>géocaliser</b> et le <b>scanner</b> sur un détecteur à triforce CCNA.
+    <br>Pour le récupérer, vous devez le <b>géocaliser</b> et le <b>scanner</b> sur un détecteur à triforce CCNA.<br><br>
+    Il paraît qu'il se cache des choses intéressantes proche de ces coordonnées:<br><br>
+    ( 4 ; 2 )<br>
+    ( 2 ; 5 )<br>
+    ( 0 ; 4 )
     """
     rappel="Entrez dans l'invite de commande le code à 4 chiffres obtenu pour passer à la suite."
     malus = state.erreur
