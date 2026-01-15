@@ -1,4 +1,3 @@
-from flask import Flask, render_template, jsonify, redirect
 import asyncio
 import subprocess
 import random
@@ -7,11 +6,11 @@ import time
 from bleak import BleakClient, BleakScanner
 import os
 from fabric import Connection
-
+ip_pc = "172.20.10.13"
 SERVICE_UUID = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
 CHAR_UUID_NOTIFY = "6E400003-B5A3-F393-E0A9-E50E24DCCA9E"
 CHAR_UUID_WRITE = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
-
+last_message = ""
 def connection_ssh(commande, ip) :
     ssh = Connection(
         host=ip,
@@ -53,6 +52,10 @@ PAGE_MAP = {
 
 async def notification_handler(sender, data, client):
     message = data.decode("utf-8").strip()
+    global last_message
+    if message == last_message :
+        message = True
+    
     print(f" Signal reçu : {message}")
 
     # Cas erreur avec code 6013
@@ -66,12 +69,12 @@ async def notification_handler(sender, data, client):
         )
 
     elif message == "-FFFF":
-        connection_ssh('sudo systemctl stop x11vnc-display1.service', "192.168.1.2")
-        connection_ssh('sudo systemctl stop firefox-sae.service', "192.168.1.2")
+        connection_ssh('sudo systemctl stop x11vnc-display1.service', ip_pc)
+        connection_ssh('sudo systemctl stop firefox-sae.service', ip_pc)
         print("ok")
     elif message == "FFFF":
-        connection_ssh('sudo systemctl start x11vnc-display1.service', "192.168.1.2")
-        connection_ssh('sudo systemctl start firefox-sae.service', "192.168.1.2")
+        connection_ssh('sudo systemctl start x11vnc-display1.service', ip_pc)
+        connection_ssh('sudo systemctl start firefox-sae.service', ip_pc)
         subprocess.run("python3 ../script.py connect 1 &", shell=True)
         update_state(
             current_page="/",
@@ -123,7 +126,7 @@ async def notification_handler(sender, data, client):
         print(" Confirmation envoyée")
     except Exception as e:
         print(" Erreur en envoyant la confirmation :", e)
-
+    last_message = message
     return True
 
 
