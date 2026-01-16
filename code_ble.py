@@ -47,7 +47,7 @@ PAGE_MAP = {
     "GO": "/etape1",
     "9471": "/etape2",
     "6013": "/etape3",
-    "4455": "/ending",
+    "4456": "/ending",
 }
 
 async def notification_handler(sender, data, client):
